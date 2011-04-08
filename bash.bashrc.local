@@ -75,21 +75,19 @@ function gitbranch {
 
 function fldcol {
 	if [ `id -u` != "0" ]; then
-		if [[ \"$PWD\" =~ /herecura ]]; then
+		if [[ $PWD =~ \/herecura ]]; then
 			FLDCOL=${BLD}${COLBLK}${UND}${COLYLW};
-		elif [[ \"$PWD\" =~ /scripts ]]; then
+		elif [[ $PWD =~ \/scripts ]]; then
 			FLDCOL=${BLD}${COLBLK}${UND}${COLBLU}
-		elif [[ \"$PWD\" =~ /etc ]]; then
-			FLDCOL=${BLD}${COLBLK}${UND}${COLRED}
-		elif [[ \"$PWD\" =~ /var/log ]]; then
-			FLDCOL=${BLD}${COLBLK}${UND}${COLRED}
-		else
-			FLDCOL=${BLD}${COLCYN}
+		elif [[ $PWD =~ \/vimfiles ]]; then
+			FLDCOL=${BLD}${COLBLK}${UND}${COLPUR}
 		fi
-	else
-		if [[ \"$PWD\" =~ /etc ]]; then
+	fi
+
+	if [ "${FLDCOL}" = "" ]; then
+		if [[ $PWD =~ ^\/etc ]]; then
 			FLDCOL=${BLD}${COLBLK}${UND}${COLRED}
-		elif [[ \"$PWD\" =~ /var/log ]]; then
+		elif [[ $PWD =~ ^\/var/log ]]; then
 			FLDCOL=${BLD}${COLBLK}${UND}${COLRED}
 		else
 			FLDCOL=${BLD}${COLCYN};
