@@ -64,9 +64,9 @@ function gitbranch {
 			GITBRANCH=$(git symbolic-ref HEAD 2>/dev/null)
 			GITBRANCH=${GITBRANCH##*/}
 			if [ ${GITBRANCH} == "master" ]; then
-				GITBRANCH="${BLD}${COLGRN}(${GITBRANCH}) "
+				GITBRANCH="${REG}${COLGRN} -- ${GITBRANCH} "
 			else
-				GITBRANCH="${BLD}${COLRED}(${GITBRANCH}) "
+				GITBRANCH="${REG}${COLRED} -- ${GITBRANCH} "
 			fi
 			echo -ne ${GITBRANCH}
 		fi
