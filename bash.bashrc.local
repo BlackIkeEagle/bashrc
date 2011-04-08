@@ -64,9 +64,9 @@ function gitbranch {
 			GITBRANCH=$(git symbolic-ref HEAD 2>/dev/null)
 			GITBRANCH=${GITBRANCH##*/}
 			if [ ${GITBRANCH} == "master" ]; then
-				GITBRANCH="${REG}${COLGRN} -- ${GITBRANCH} "
+				GITBRANCH="${REG}${COLGRN}--${GITBRANCH}"
 			else
-				GITBRANCH="${REG}${COLRED} -- ${GITBRANCH} "
+				GITBRANCH="${REG}${COLRED}--${GITBRANCH}"
 			fi
 			echo -ne ${GITBRANCH}
 		fi
@@ -135,10 +135,10 @@ case `hostname` in
 	;;
 esac
 
-PS1="\[${PSCOL}\]┌─(\t)─( \[${USRCOL}\]\u\[${TXRES}\]\[${PSCOL}\] @ \[${TXRES}\]\[${HSTCOL}\]\h\[${TXRES}\]\[${PSCOL}\] )─(\$(smiley)\[${TXRES}\]\[${PSCOL}\])─( \$(fldcol)\w\[${TXRES}\]\$(gitbranch)\[${TXRES}\]\[${PSCOL}\] )\n└♦\[${TXRES}\] "
-PS2="\[${PSCOL}\]└♦\[${TXRES}\] "
-PS3="\[${PSCOL}\]└>\[${TXRES}\] "
-PS4="\[${PSCOL}\]└+\[${TXRES}\] "
+PS1="\[${PSCOL}\]┌─┤\t├─┤\[${USRCOL}\]\u\[${TXRES}\]\[${PSCOL}\] @ \[${TXRES}\]\[${HSTCOL}\]\h\[${TXRES}\]\[${PSCOL}\]├─┤\$(smiley)\[${TXRES}\]\[${PSCOL}\]├─┤\$(fldcol)\w\[${TXRES}\]\$(gitbranch)\[${TXRES}\]\[${PSCOL}\]├─╼\n└╼\[${TXRES}\] "
+PS2="\[${PSCOL}\]╶╼\[${TXRES}\] "
+PS3="\[${PSCOL}\]╶╼\[${TXRES}\] "
+PS4="\[${PSCOL}\]╶╼\[${TXRES}\] "
 
 export PS1 PS2 PS3 PS4
 
