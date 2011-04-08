@@ -98,8 +98,8 @@ function fldcol {
 
 # configure prompt
 if [ `id -u` != "0" ]; then
-	PSCOL=${REG}${COLWHT};
-	USRCOL=${BLD}${COLWHT};
+	PSCOL=${REG}${COLYLW};
+	USRCOL=${BLD}${COLYLW};
 else
 	PSCOL=${REG}${COLRED};
 	USRCOL=${BLD}${COLRED};
