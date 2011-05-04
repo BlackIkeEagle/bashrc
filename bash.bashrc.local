@@ -44,6 +44,19 @@ BGWHT='\e[47;'
 
 TXRES='\e[0m'
 
+function terminal {
+	local res=$?
+	if [ "$TERM" = "screen" ]; then
+		OUT=${BLD}${COLPUR}●${TXRES}
+	elif [ "$SSH_CLIENT" != "" ]; then
+		OUT=${BLD}${COLRED}●${TXRES}
+	else
+		OUT=${BLD}${COLGRN}●${TXRES}
+	fi
+	echo -ne ${OUT}
+	return $res
+}
+
 function smiley {
 	local res=$?
 	if [ "$res" == "0" ]; then
@@ -58,6 +71,7 @@ function smiley {
 }
 
 function gitbranch {
+	local res=$?
 	if [ `id -u` != "0" ]; then
 		git symbolic-ref HEAD > /dev/null 2>&1
 		if [ $? -eq 0 ]; then
@@ -71,9 +85,11 @@ function gitbranch {
 			echo -ne ${GITBRANCH}
 		fi
 	fi
+	return $res
 }
 
 function fldcol {
+	local res=$?
 	if [ `id -u` != "0" ]; then
 		if [[ $PWD =~ \/herecura ]]; then
 			FLDCOL=${BLD}${COLBLK}${UND}${COLYLW};
@@ -94,6 +110,7 @@ function fldcol {
 		fi
 	fi
 	echo -ne ${FLDCOL}
+	return $res
 }
 
 # configure prompt
@@ -135,7 +152,7 @@ case `hostname` in
 	;;
 esac
 
-PS1="\[${PSCOL}\]┌─┤\t├─┤\[${USRCOL}\]\u\[${TXRES}\]\[${PSCOL}\] @ \[${TXRES}\]\[${HSTCOL}\]\h\[${TXRES}\]\[${PSCOL}\]├─┤\$(smiley)\[${TXRES}\]\[${PSCOL}\]├─┤\$(fldcol)\w\[${TXRES}\]\$(gitbranch)\[${TXRES}\]\[${PSCOL}\]├─╼\n└╼\[${TXRES}\] "
+PS1="\[${PSCOL}\]┌─┤\$(terminal)\[${PSCOL}\]├─┤\t├─┤\[${USRCOL}\]\u\[${TXRES}\]\[${PSCOL}\] @ \[${TXRES}\]\[${HSTCOL}\]\h\[${TXRES}\]\[${PSCOL}\]├─┤\$(smiley)\[${TXRES}\]\[${PSCOL}\]├─┤\$(fldcol)\w\[${TXRES}\]\$(gitbranch)\[${TXRES}\]\[${PSCOL}\]├─╼\n└╼\[${TXRES}\] "
 PS2="\[${PSCOL}\]╶╼\[${TXRES}\] "
 PS3="\[${PSCOL}\]╶╼\[${TXRES}\] "
 PS4="\[${PSCOL}\]╶╼\[${TXRES}\] "
