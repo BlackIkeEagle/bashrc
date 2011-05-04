@@ -47,7 +47,7 @@ TXRES='\e[0m'
 function terminal {
 	local res=$?
 	if [ "$TERM" = "screen" ]; then
-		OUT=${BLD}${COLPUR}●${TXRES}
+		OUT=${BLD}${COLCYN}●${TXRES}
 	elif [ "$SSH_CLIENT" != "" ]; then
 		OUT=${BLD}${COLRED}●${TXRES}
 	else
