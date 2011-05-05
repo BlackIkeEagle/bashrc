@@ -44,27 +44,15 @@ BGWHT='\e[47;'
 
 TXRES='\e[0m'
 
-function terminal {
-	local res=$?
-	if [ "$TERM" = "screen" ]; then
-		OUT=${BLD}${COLCYN}●${TXRES}
-	elif [ "$SSH_CLIENT" != "" ]; then
-		OUT=${BLD}${COLRED}●${TXRES}
-	else
-		OUT=${BLD}${COLGRN}●${TXRES}
-	fi
-	echo -ne ${OUT}
-	return $res
-}
 
 function smiley {
 	local res=$?
 	if [ "$res" == "0" ]; then
 		SMCOL=${BLD}${COLGRN}
-		SMILE=":-)"
+		SMILE="●"
 	else
 		SMCOL=${BLD}${COLRED}
-		SMILE=":'("
+		SMILE="●"
 	fi
 	echo -ne ${SMCOL}${SMILE}
 	return $res
@@ -127,10 +115,10 @@ fi
 #switch
 case `hostname` in
 	BlackRaptor)
-		HSTCOL=${BGRED}${COLWHT}
+		HSTCOL=${BLD}${COLBLK}${BGRED}${COLWHT}
 	;;
 	BlackOwl)
-		HSTCOL=${BGRED}${COLYLW}
+		HSTCOL=${BLD}${COLBLK}${BGRED}${COLYLW}
 	;;
 	BlackFalcon)
 		HSTCOL=${BLD}${COLGRN}
@@ -141,21 +129,33 @@ case `hostname` in
 	BlackPidgin)
 		HSTCOL=${BLD}${COLPUR}
 	;;
+	BlackHarrier)
+		HSTCOL=${BLD}${COLWHT}
+	;;
 	BlackHawk)
-		HSTCOL=${BGGRN}${COLWHT}
+		HSTCOL=${BLD}${COLBLK}${BGGRN}${COLWHT}
 	;;
 	BlackKite)
-		HSTCOL=${BGGRN}${COLYLW}
+		HSTCOL=${BLD}${COLBLK}${BGGRN}${COLYLW}
 	;;
 	*)
 		HSTCOL=${PSCOL}
 	;;
 esac
 
-PS1="\[${PSCOL}\]┌─┤\$(terminal)\[${PSCOL}\]├─┤\t├─┤\[${USRCOL}\]\u\[${TXRES}\]\[${PSCOL}\] @ \[${TXRES}\]\[${HSTCOL}\]\h\[${TXRES}\]\[${PSCOL}\]├─┤\$(smiley)\[${TXRES}\]\[${PSCOL}\]├─┤\$(fldcol)\w\[${TXRES}\]\$(gitbranch)\[${TXRES}\]\[${PSCOL}\]├─╼\n└╼\[${TXRES}\] "
-PS2="\[${PSCOL}\]╶╼\[${TXRES}\] "
-PS3="\[${PSCOL}\]╶╼\[${TXRES}\] "
-PS4="\[${PSCOL}\]╶╼\[${TXRES}\] "
+# configure session coloring
+if [ "$TERM" = "screen" ]; then
+	SESSCOL=${BLD}${COLCYN}
+elif [ "$SSH_CLIENT" != "" ]; then
+	SESSCOL=${BLD}${COLRED}
+else
+	SESSCOL=${PSCOL}
+fi
+
+PS1="\[${PSCOL}\]┌─┤\$(smiley)\[${TXRES}\]\[${PSCOL}\]├─┤\t├─┤\[${USRCOL}\]\u\[${TXRES}\]\[${PSCOL}\] @ \[${TXRES}\]\[${HSTCOL}\]\h\[${TXRES}\]\[${PSCOL}\]├─┤\$(fldcol)\w\[${TXRES}\]\$(gitbranch)\[${TXRES}\]\[${PSCOL}\]├─\[${TXRES}\]\[${SESSCOL}\]╼\[${TXRES}\]\[${PSCOL}\]\n└\[${TXRES}\]\[${SESSCOL}\]╼\[${TXRES}\] "
+PS2="\[${PSCOL}\]╶\[${TXRES}\]\[${SESSCOL}\]╼\[${TXRES}\] "
+PS3="\[${PSCOL}\]╶\[${TXRES}\]\[${SESSCOL}\]╼\[${TXRES}\] "
+PS4="\[${PSCOL}\]╶\[${TXRES}\]\[${SESSCOL}\]╼\[${TXRES}\] "
 
 export PS1 PS2 PS3 PS4
 
