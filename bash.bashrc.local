@@ -152,7 +152,7 @@ else
 	SESSCOL=${PSCOL}
 fi
 
-PS1="\[${PSCOL}\]┌─┤\$(smiley)\[${TXRES}\]\[${PSCOL}\]├─┤${TXRES}\]\[${SESSCOL}\]\t\[${TXRES}\]\[${PSCOL}\]├─┤\[${USRCOL}\]\u\[${TXRES}\]\[${PSCOL}\] @ \[${TXRES}\]\[${HSTCOL}\]\h\[${TXRES}\]\[${PSCOL}\]├─┤\$(fldcol)\w\[${TXRES}\]\$(gitbranch)\[${TXRES}\]\[${PSCOL}\]├─╼\n└\[╼\[${TXRES}\] "
+PS1="\[${PSCOL}\]┌─┤\$(smiley)\[${TXRES}\]\[${PSCOL}\]├─┤\[${TXRES}\]\[${SESSCOL}\]\t\[${TXRES}\]\[${PSCOL}\]├─┤\[${USRCOL}\]\u\[${TXRES}\]\[${PSCOL}\] @ \[${TXRES}\]\[${HSTCOL}\]\h\[${TXRES}\]\[${PSCOL}\]├─┤\$(fldcol)\w\[${TXRES}\]\$(gitbranch)\[${TXRES}\]\[${PSCOL}\]├─╼\n└╼\[${TXRES}\] "
 PS2="\[${PSCOL}\]╶╼\[${TXRES}\] "
 PS3="\[${PSCOL}\]╶╼\[${TXRES}\] "
 PS4="\[${PSCOL}\]╶╼\[${TXRES}\] "
