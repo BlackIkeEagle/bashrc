@@ -113,7 +113,7 @@ fi
 
 # configure host coloring
 #switch
-case `hostname` in
+case `cat /proc/sys/kernel/hostname` in
 	BlackRaptor)
 		HSTCOL=${BLD}${COLBLK}${BGRED}${COLWHT}
 	;;
