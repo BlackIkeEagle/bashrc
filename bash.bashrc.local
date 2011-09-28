@@ -4,8 +4,8 @@
 
 # Command history.
 export HISTSIZE=4096;
-export HISTFILESIZE=4096;
-export HISTCONTROL='ignoredups';
+export HISTIGNORE="&:ls:exit:reset:clear"
+export HISTCONTROL="ignoreboth:erasedups"
 shopt -s histreedit;
 
 # File manipulation.
