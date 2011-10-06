@@ -58,19 +58,33 @@ function smiley {
 	return $res
 }
 
-function gitbranch {
+function scmbranch {
 	local res=$?
 	if [ `id -u` != "0" ]; then
-		git symbolic-ref HEAD > /dev/null 2>&1
-		if [ $? -eq 0 ]; then
-			GITBRANCH=$(git symbolic-ref HEAD 2>/dev/null)
-			GITBRANCH=${GITBRANCH##*/}
-			if [ ${GITBRANCH} == "master" ]; then
-				GITBRANCH="${REG}${COLGRN}--${GITBRANCH}"
-			else
-				GITBRANCH="${REG}${COLRED}--${GITBRANCH}"
+		if which git > /dev/null 2>&1; then
+			git symbolic-ref HEAD > /dev/null 2>&1
+			if [ $? -eq 0 ]; then
+				GITBRANCH=$(git symbolic-ref HEAD 2>/dev/null)
+				GITBRANCH=${GITBRANCH##*/}
+				if [ ${GITBRANCH} == "master" ]; then
+					GITBRANCH="${REG}${COLGRN}--${GITBRANCH}${TXRES}${BLD}${COLYLW}-git"
+				else
+					GITBRANCH="${REG}${COLRED}--${GITBRANCH}${TXRES}${BLD}${COLYLW}-git"
+				fi
+				echo -ne ${GITBRANCH}
 			fi
-			echo -ne ${GITBRANCH}
+		fi
+		if which hg > /dev/null 2>&1; then
+			hg branch > /dev/null 2>&1
+			if [ $? -eq 0 ]; then
+				HGBRANCH=$(hg branch 2>/dev/null)
+				if [ ${HGBRANCH} == "default" ]; then
+					HGBRANCH="${REG}${COLGRN}--${HGBRANCH}${TXRES}${BLD}${COLYLW}-hg"
+				else
+					HGBRANCH="${REG}${COLGRN}--${HGBRANCH}${TXRES}${BLD}${COLYLW}-hg"
+				fi
+				echo -ne ${HGBRANCH}
+			fi
 		fi
 	fi
 	return $res
@@ -154,7 +168,7 @@ else
 	SESSCOL=${PSCOL}
 fi
 
-PS1="\[${PSCOL}\]┌─┤\$(smiley)\[${TXRES}\]\[${PSCOL}\]├─┤\[${TXRES}\]\[${SESSCOL}\]\t\[${TXRES}\]\[${PSCOL}\]├─┤\[${USRCOL}\]\u\[${TXRES}\]\[${PSCOL}\] @ \[${TXRES}\]\[${HSTCOL}\]\h\[${TXRES}\]\[${PSCOL}\]├─┤\$(fldcol)\w\[${TXRES}\]\$(gitbranch)\[${TXRES}\]\[${PSCOL}\]├─╼\n└╼\[${TXRES}\] "
+PS1="\[${PSCOL}\]┌─┤\$(smiley)\[${TXRES}\]\[${PSCOL}\]├─┤\[${TXRES}\]\[${SESSCOL}\]\t\[${TXRES}\]\[${PSCOL}\]├─┤\[${USRCOL}\]\u\[${TXRES}\]\[${PSCOL}\] @ \[${TXRES}\]\[${HSTCOL}\]\h\[${TXRES}\]\[${PSCOL}\]├─┤\$(fldcol)\w\[${TXRES}\]\$(scmbranch)\[${TXRES}\]\[${PSCOL}\]├─╼\n└╼\[${TXRES}\] "
 PS2="\[${PSCOL}\]╶╼\[${TXRES}\] "
 PS3="\[${PSCOL}\]╶╼\[${TXRES}\] "
 PS4="\[${PSCOL}\]╶╼\[${TXRES}\] "
