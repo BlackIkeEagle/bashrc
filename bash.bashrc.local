@@ -85,6 +85,8 @@ function fldcol {
 			FLDCOL=${BLD}${COLBLK}${UND}${COLBLU}
 		elif [[ $PWD =~ \/vimfiles ]]; then
 			FLDCOL=${BLD}${COLBLK}${UND}${COLPUR}
+		elif [[ $PWD =~ \/devel ]]; then
+			FLDCOL=${BLD}${COLBLK}${UND}${COLWHT}
 		fi
 	fi
 
