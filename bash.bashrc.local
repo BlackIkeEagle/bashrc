@@ -176,4 +176,6 @@ PS4="\[${PSCOL}\]╶╼\[${TXRES}\] "
 
 export PS1 PS2 PS3 PS4
 
-return 0
+# add .bin to path if found in home
+[ -d ~/.bin ] && PATH=$PATH:~/.bin
+
