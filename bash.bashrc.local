@@ -5,7 +5,7 @@
 # Command history.
 export HISTSIZE=4096;
 export HISTFILESIZE=4096;
-export HISTCONTROL='ignoredups';
+export HISTCONTROL='ignoreboth:erasedups';
 shopt -s histreedit;
 
 # File manipulation.
