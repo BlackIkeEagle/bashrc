@@ -3,6 +3,7 @@
 #
 
 # Command history.
+export HISTIGNORE="&:ls:[bf]g:exit:reset:clear:cd*";
 export HISTSIZE=4096;
 export HISTIGNORE="&:ls:exit:reset:clear"
 export HISTCONTROL="ignoreboth:erasedups"
@@ -175,4 +176,6 @@ PS4="\[${PSCOL}\]╶╼\[${TXRES}\] "
 
 export PS1 PS2 PS3 PS4
 
-return 0
+# add .bin to path if found in home
+[ -d ~/.bin ] && PATH=$PATH:~/.bin
+
