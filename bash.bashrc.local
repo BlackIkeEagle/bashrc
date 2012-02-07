@@ -2,6 +2,12 @@
 # /etc/bash.bashrc.local
 #
 
+# add .bin to path if found in home
+[ -d ~/.bin ] && PATH=$PATH:~/.bin
+
+# If not running interactively, stop here
+[[ $- != *i* ]] && return
+
 # Command history.
 export HISTIGNORE="&:ls:[bf]g:exit:reset:clear:cd*";
 export HISTSIZE=4096;
@@ -175,7 +181,4 @@ PS3="\[${PSCOL}\]╶╼\[${TXRES}\] "
 PS4="\[${PSCOL}\]╶╼\[${TXRES}\] "
 
 export PS1 PS2 PS3 PS4
-
-# add .bin to path if found in home
-[ -d ~/.bin ] && PATH=$PATH:~/.bin
 
