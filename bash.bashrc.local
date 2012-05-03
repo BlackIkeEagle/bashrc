@@ -44,17 +44,16 @@ REG='\033[0;'
 BLD='\033[1;'
 UND='\033[4;'
 
-BGBLK='\033[40;'
-BGRED='\033[41;'
-BGGRN='\033[42;'
-BGYLW='\033[43;'
-BGBLU='\033[44;'
-BGPUR='\033[45;'
-BGCYN='\033[46;'
-BGWHT='\033[47;'
+BGBLK='\033[40;30m'
+BGRED='\033[41;30m'
+BGGRN='\033[42;30m'
+BGYLW='\033[43;30m'
+BGBLU='\033[44;30m'
+BGPUR='\033[45;30m'
+BGCYN='\033[46;30m'
+BGWHT='\033[47;30m'
 
-TXRES='\033[0m'
-
+TXRES='\033[0;0m'
 
 function smiley {
 	local res=$?
