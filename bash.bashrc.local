@@ -72,26 +72,28 @@ function scmbranch {
 	local res=$?
 	if [ `id -u` != "0" ]; then
 		if which git > /dev/null 2>&1; then
-			git symbolic-ref HEAD > /dev/null 2>&1
-			if [ $? -eq 0 ]; then
+			if git symbolic-ref HEAD > /dev/null 2>&1; then
 				GITBRANCH=$(git symbolic-ref HEAD 2>/dev/null)
 				GITBRANCH=${GITBRANCH##*/}
+				GITDIRTY=
+				git diff --no-ext-diff --quiet --exit-code || GITDIRTY=" *"
 				if [ ${GITBRANCH} == "master" ]; then
-					GITBRANCH="${REG}${COLGRN}--${GITBRANCH}${TXRES}${BLD}${COLYLW}-git"
+					GITBRANCH="${PSCOL}(${TXRES}${BLD}${COLYLW}git${TXRES}${PSCOL})─(${TXRES}${REG}${COLGRN}${GITBRANCH}${GITDIRTY}${TXRES}${PSCOL})"
 				else
-					GITBRANCH="${REG}${COLRED}--${GITBRANCH}${TXRES}${BLD}${COLYLW}-git"
+					GITBRANCH="${PSCOL}(${TXRES}${BLD}${COLYLW}git${TXRES}${PSCOL})─(${TXRES}${REG}${COLRED}${GITBRANCH}${GITDIRTY}${TXRES}${PSCOL})"
 				fi
 				echo -ne ${GITBRANCH}
 			fi
 		fi
 		if which hg > /dev/null 2>&1; then
-			hg branch > /dev/null 2>&1
-			if [ $? -eq 0 ]; then
+			if hg branch > /dev/null 2>&1; then
 				HGBRANCH=$(hg branch 2>/dev/null)
+				HGDIRTY=
+				[[ "$(hg status -n | wc -l)" == "0" ]] || HGDIRTY=" *"
 				if [ ${HGBRANCH} == "default" ]; then
-					HGBRANCH="${REG}${COLGRN}--${HGBRANCH}${TXRES}${BLD}${COLYLW}-hg"
+					HGBRANCH="${PSCOL}(${TXRES}${BLD}${COLYLW}hg${TXRES}${PSCOL})─(${TXRES}${REG}${COLGRN}${HGBRANCH}${HGDIRTY}${TXRES}${PSCOL})"
 				else
-					HGBRANCH="${REG}${COLGRN}--${HGBRANCH}${TXRES}${BLD}${COLYLW}-hg"
+					HGBRANCH="${PSCOL}(${TXRES}${BLD}${COLYLW}hg${TXRES}${PSCOL})─(${TXRES}${REG}${COLRED}${HGBRANCH}${HGDIRTY}${TXRES}${PSCOL})"
 				fi
 				echo -ne ${HGBRANCH}
 			fi
@@ -185,7 +187,7 @@ else
 	SESSCOL=${PSCOL}
 fi
 
-PS1="\[${PSCOL}\]┌─┤\$(smiley)\[${TXRES}\]\[${PSCOL}\]├─┤\[${TXRES}\]\[${SESSCOL}\]\t\[${TXRES}\]\[${PSCOL}\]├─┤\[${USRCOL}\]\u\[${TXRES}\]\[${PSCOL}\] @ \[${TXRES}\]\[${HSTCOL}\]\h\[${TXRES}\]\[${PSCOL}\]├─┤\$(fldcol)\w\[${TXRES}\]\$(scmbranch)\[${TXRES}\]\[${PSCOL}\]├─╼\n└╼\[${TXRES}\] "
+PS1="\[${PSCOL}\]┌─┤\[${TXRES}\]\$(smiley)\[${TXRES}\]\[${PSCOL}\]├─┤\[${TXRES}\]\[${SESSCOL}\]\t\[${TXRES}\]\[${PSCOL}\]├─┤\[${TXRES}\]\[${USRCOL}\]\u\[${TXRES}\]\[${PSCOL}\] @ \[${TXRES}\]\[${HSTCOL}\]\h\[${TXRES}\]\[${PSCOL}\]├─┤\[${TXRES}\]\$(fldcol)\w\[${TXRES}\]\[${PSCOL}\]├─\[${TXRES}\]\$(scmbranch)\[${TXRES}\]\[${PSCOL}\]─╼\n└╼\[${TXRES}\] "
 PS2="\[${PSCOL}\]╶╼\[${TXRES}\] "
 PS3="\[${PSCOL}\]╶╼\[${TXRES}\] "
 PS4="\[${PSCOL}\]╶╼\[${TXRES}\] "
