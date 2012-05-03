@@ -98,6 +98,14 @@ function scmbranch {
 				echo -ne ${HGBRANCH}
 			fi
 		fi
+		if which svn > /dev/null 2>&1; then
+			if svn info > /dev/null 2>&1; then
+				SVNREVISION=$(svn info | sed -ne 's/^Revision: //p')
+				[[ "$(svn status | wc -l)" == "0" ]] || SVNDIRTY=" *"
+				SVNBRANCH="${PSCOL}(${TXRES}${BLD}${COLYLW}svn${TXRES}${PSCOL})─(${TXRES}${REG}${COLGRN}${SVNREVISION}${SVNDIRTY}${TXRES}${PSCOL})"
+				echo -ne ${SVNBRANCH}
+			fi
+		fi
 	fi
 	return $res
 }
