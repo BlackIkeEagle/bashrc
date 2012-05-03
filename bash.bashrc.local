@@ -148,10 +148,10 @@ else
 fi
 case $hostname in
 	BlackRaptor)
-		HSTCOL=${BLD}${COLBLK}${BGRED}${COLWHT}
+		HSTCOL=${BGRED}${BLD}${COLWHT}
 	;;
 	BlackOwl)
-		HSTCOL=${BLD}${COLBLK}${BGRED}${COLYLW}
+		HSTCOL=${BGRED}${BLD}${COLYLW}
 	;;
 	BlackFalcon)
 		HSTCOL=${BLD}${COLGRN}
@@ -166,10 +166,10 @@ case $hostname in
 		HSTCOL=${BLD}${COLWHT}
 	;;
 	BlackHawk)
-		HSTCOL=${BLD}${COLBLK}${BGGRN}${COLWHT}
+		HSTCOL=${BGGRN}${BLD}${COLWHT}
 	;;
 	BlackKite)
-		HSTCOL=${BLD}${COLBLK}${BGGRN}${COLYLW}
+		HSTCOL=${BGGRN}${BLD}${COLYLW}
 	;;
 	*)
 		HSTCOL=${PSCOL}
