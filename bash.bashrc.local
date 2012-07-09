@@ -187,9 +187,11 @@ case $hostname in
 esac
 
 # configure session coloring
-if [ "$TERM" = "screen" ]; then
+if [ "$STY" != "" ]; then
+	# screen
 	SESSCOL=${BLD}${COLCYN}
 elif [ "$SSH_CLIENT" != "" ]; then
+	# SSH
 	SESSCOL=${BLD}${COLRED}
 else
 	SESSCOL=${PSCOL}
