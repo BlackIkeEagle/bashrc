@@ -72,15 +72,17 @@ function scmbranch {
 	local res=$?
 	if [ `id -u` != "0" ]; then
 		if which git > /dev/null 2>&1; then
-			if git symbolic-ref HEAD > /dev/null 2>&1; then
+			if git rev-parse > /dev/null 2>&1; then
 				GITBRANCH=$(git symbolic-ref HEAD 2>/dev/null)
 				GITBRANCH=${GITBRANCH/refs\/heads\//}
 				GITDIRTY=
 				git diff --no-ext-diff --quiet --exit-code || GITDIRTY=" *"
 				if [ "${GITBRANCH}" == "master" ]; then
 					GITBRANCH="${PSCOL}(${TXRES}${BLD}${COLYLW}git${TXRES}${PSCOL})─(${TXRES}${REG}${COLGRN}${GITBRANCH}${GITDIRTY}${TXRES}${PSCOL})"
+				elif [ "${GITBRANCH}" == "" ]; then
+					GITBRANCH="${PSCOL}(${TXRES}${BLD}${COLYLW}git${TXRES}${PSCOL})─(${TXRES}${REG}${COLRED}DETACHED${GITDIRTY}${TXRES}${PSCOL})"
 				else
-					GITBRANCH="${PSCOL}(${TXRES}${BLD}${COLYLW}git${TXRES}${PSCOL})─(${TXRES}${REG}${COLRED}${GITBRANCH}${GITDIRTY}${TXRES}${PSCOL})"
+					GITBRANCH="${PSCOL}(${TXRES}${BLD}${COLYLW}git${TXRES}${PSCOL})─(${TXRES}${REG}${COLCYN}${GITBRANCH}${GITDIRTY}${TXRES}${PSCOL})"
 				fi
 				echo -ne ${GITBRANCH}
 			fi
