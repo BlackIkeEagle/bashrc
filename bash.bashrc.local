@@ -204,3 +204,4 @@ PS4="\[${PSCOL}\]╶╼\[${TXRES}\] "
 
 export PS1 PS2 PS3 PS4
 
+# vim:set ft=sh et:
