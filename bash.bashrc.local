@@ -77,7 +77,7 @@ function scmbranch {
 				GITBRANCH=${GITBRANCH/refs\/heads\//}
 				GITDIRTY=
 				git diff --no-ext-diff --quiet --exit-code || GITDIRTY=" *"
-				if [ ${GITBRANCH} == "master" ]; then
+				if [ "${GITBRANCH}" == "master" ]; then
 					GITBRANCH="${PSCOL}(${TXRES}${BLD}${COLYLW}git${TXRES}${PSCOL})─(${TXRES}${REG}${COLGRN}${GITBRANCH}${GITDIRTY}${TXRES}${PSCOL})"
 				else
 					GITBRANCH="${PSCOL}(${TXRES}${BLD}${COLYLW}git${TXRES}${PSCOL})─(${TXRES}${REG}${COLRED}${GITBRANCH}${GITDIRTY}${TXRES}${PSCOL})"
@@ -90,7 +90,7 @@ function scmbranch {
 				HGBRANCH=$(hg branch 2>/dev/null)
 				HGDIRTY=
 				[[ "$(hg status -n | wc -l)" == "0" ]] || HGDIRTY=" *"
-				if [ ${HGBRANCH} == "default" ]; then
+				if [ "${HGBRANCH}" == "default" ]; then
 					HGBRANCH="${PSCOL}(${TXRES}${BLD}${COLYLW}hg${TXRES}${PSCOL})─(${TXRES}${REG}${COLGRN}${HGBRANCH}${HGDIRTY}${TXRES}${PSCOL})"
 				else
 					HGBRANCH="${PSCOL}(${TXRES}${BLD}${COLYLW}hg${TXRES}${PSCOL})─(${TXRES}${REG}${COLRED}${HGBRANCH}${HGDIRTY}${TXRES}${PSCOL})"
