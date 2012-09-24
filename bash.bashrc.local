@@ -11,7 +11,6 @@
 # Command history.
 export HISTIGNORE="&:ls:[bf]g:exit:reset:clear:cd*";
 export HISTSIZE=4096;
-export HISTIGNORE="&:ls:exit:reset:clear"
 export HISTCONTROL="ignoreboth:erasedups"
 shopt -s histreedit;
 
