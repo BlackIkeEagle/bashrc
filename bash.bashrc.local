@@ -164,6 +164,9 @@ case $hostname in
 	BlackOwl)
 		HSTCOL=${BGRED}${BLD}${COLYLW}
 	;;
+	BlackVpn)
+		HSTCOL=${BGRED}${BLD}${COLGRN}
+	;;
 	BlackFalcon)
 		HSTCOL=${BLD}${COLGRN}
 	;;
