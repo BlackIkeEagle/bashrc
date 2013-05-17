@@ -3,7 +3,7 @@
 #
 
 # add .bin to path if found in home
-[ -d ~/.bin ] && PATH=$PATH:~/.bin
+[ -d $HOME/.bin ] && PATH=$HOME/.bin:$PATH
 
 # If not running interactively, stop here
 [[ $- != *i* ]] && return
