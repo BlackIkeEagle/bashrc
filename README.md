@@ -4,9 +4,9 @@ bashrc
 install
 -------
 
-clone this repository
+1. clone this repository
 
-link your .bashrc to the repositories bashrc file
+2. link your .bashrc to the repositories bashrc file
 
 	``` sh
 	$ ln -s ~/location/of/the/clone/bashrc ~/.bashrc
