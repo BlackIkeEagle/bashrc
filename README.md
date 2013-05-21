@@ -8,6 +8,6 @@ clone this repository
 
 link your .bashrc to the repositories bashrc file
 
-    ```sh
+    ``` sh
     ln -s ~/location/of/the/clone/bashrc ~/.bashrc
     ```
