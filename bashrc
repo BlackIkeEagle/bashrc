@@ -22,7 +22,7 @@ if ls --version > /dev/null 2>&1; then
 else
 	alias ls='ls -G'; #osx
 fi
-alias grep='grep -n --color';
+alias grep='grep --color';
 alias cd..='cd ..';
 
 [ -x /usr/bin/pacman-color ] && alias pacman='pacman-color';
