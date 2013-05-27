@@ -77,11 +77,11 @@ function scmbranch {
 				GITDIRTY=
 				git diff --no-ext-diff --quiet --exit-code || GITDIRTY=" *"
 				if [ "${GITBRANCH}" == "master" ]; then
-					GITBRANCH="${PSCOL}(${TXRES}${BLD}${COLYLW}git${TXRES}${PSCOL})─(${TXRES}${REG}${COLGRN}${GITBRANCH}${GITDIRTY}${TXRES}${PSCOL})"
+					GITBRANCH="${PSCOL}─(${TXRES}${BLD}${COLYLW}git${TXRES}${PSCOL})─(${TXRES}${REG}${COLGRN}${GITBRANCH}${GITDIRTY}${TXRES}${PSCOL})"
 				elif [ "${GITBRANCH}" == "" ]; then
-					GITBRANCH="${PSCOL}(${TXRES}${BLD}${COLYLW}git${TXRES}${PSCOL})─(${TXRES}${REG}${COLRED}DETACHED${GITDIRTY}${TXRES}${PSCOL})"
+					GITBRANCH="${PSCOL}─(${TXRES}${BLD}${COLYLW}git${TXRES}${PSCOL})─(${TXRES}${REG}${COLRED}DETACHED${GITDIRTY}${TXRES}${PSCOL})"
 				else
-					GITBRANCH="${PSCOL}(${TXRES}${BLD}${COLYLW}git${TXRES}${PSCOL})─(${TXRES}${REG}${COLCYN}${GITBRANCH}${GITDIRTY}${TXRES}${PSCOL})"
+					GITBRANCH="${PSCOL}─(${TXRES}${BLD}${COLYLW}git${TXRES}${PSCOL})─(${TXRES}${REG}${COLCYN}${GITBRANCH}${GITDIRTY}${TXRES}${PSCOL})"
 				fi
 				echo -ne ${GITBRANCH}
 			fi
@@ -92,9 +92,9 @@ function scmbranch {
 				HGDIRTY=
 				[[ "$(hg status -n | wc -l)" == "0" ]] || HGDIRTY=" *"
 				if [ "${HGBRANCH}" == "default" ]; then
-					HGBRANCH="${PSCOL}(${TXRES}${BLD}${COLYLW}hg${TXRES}${PSCOL})─(${TXRES}${REG}${COLGRN}${HGBRANCH}${HGDIRTY}${TXRES}${PSCOL})"
+					HGBRANCH="${PSCOL}─(${TXRES}${BLD}${COLYLW}hg${TXRES}${PSCOL})─(${TXRES}${REG}${COLGRN}${HGBRANCH}${HGDIRTY}${TXRES}${PSCOL})"
 				else
-					HGBRANCH="${PSCOL}(${TXRES}${BLD}${COLYLW}hg${TXRES}${PSCOL})─(${TXRES}${REG}${COLRED}${HGBRANCH}${HGDIRTY}${TXRES}${PSCOL})"
+					HGBRANCH="${PSCOL}─(${TXRES}${BLD}${COLYLW}hg${TXRES}${PSCOL})─(${TXRES}${REG}${COLRED}${HGBRANCH}${HGDIRTY}${TXRES}${PSCOL})"
 				fi
 				echo -ne ${HGBRANCH}
 			fi
@@ -103,7 +103,7 @@ function scmbranch {
 			if svn info > /dev/null 2>&1; then
 				SVNREVISION=$(svn info | sed -ne 's/^Revision: //p')
 				[[ "$(svn status | wc -l)" == "0" ]] || SVNDIRTY=" *"
-				SVNBRANCH="${PSCOL}(${TXRES}${BLD}${COLYLW}svn${TXRES}${PSCOL})─(${TXRES}${REG}${COLGRN}${SVNREVISION}${SVNDIRTY}${TXRES}${PSCOL})"
+				SVNBRANCH="${PSCOL}─(${TXRES}${BLD}${COLYLW}svn${TXRES}${PSCOL})─(${TXRES}${REG}${COLGRN}${SVNREVISION}${SVNDIRTY}${TXRES}${PSCOL})"
 				echo -ne ${SVNBRANCH}
 			fi
 		fi
@@ -201,7 +201,7 @@ else
 	SESSCOL=${PSCOL}
 fi
 
-PS1="\[${PSCOL}\]┌─┤\[${TXRES}\]\$(smiley)\[${TXRES}\]\[${PSCOL}\]├─┤\[${TXRES}\]\[${SESSCOL}\]\t\[${TXRES}\]\[${PSCOL}\]├─┤\[${TXRES}\]\[${USRCOL}\]\u\[${TXRES}\]\[${PSCOL}\] @ \[${TXRES}\]\[${HSTCOL}\]\h\[${TXRES}\]\[${PSCOL}\]├─┤\[${TXRES}\]\$(fldcol)\w\[${TXRES}\]\[${PSCOL}\]├─\[${TXRES}\]\$(scmbranch)\[${TXRES}\]\[${PSCOL}\]─╼\n└╼\[${TXRES}\] "
+PS1="\[${PSCOL}\]┌─┤\[${TXRES}\]\$(smiley)\[${TXRES}\]\[${PSCOL}\]├─┤\[${TXRES}\]\[${SESSCOL}\]\t\[${TXRES}\]\[${PSCOL}\]├─┤\[${TXRES}\]\[${USRCOL}\]\u\[${TXRES}\]\[${PSCOL}\] @ \[${TXRES}\]\[${HSTCOL}\]\h\[${TXRES}\]\[${PSCOL}\]├─┤\[${TXRES}\]\$(fldcol)\w\[${TXRES}\]\[${PSCOL}\]├\[${TXRES}\]\$(scmbranch)\[${TXRES}\]\[${PSCOL}\]─╼\n└╼\[${TXRES}\] "
 PS2="\[${PSCOL}\]╶╼\[${TXRES}\] "
 PS3="\[${PSCOL}\]╶╼\[${TXRES}\] "
 PS4="\[${PSCOL}\]╶╼\[${TXRES}\] "
