@@ -1,22 +1,83 @@
-#
-# /etc/bash.bashrc.local
-#
+#######################################
+# BlackEagle's .bashrc                #
+#######################################
 
-# add .bin to path if found in home
+#=====================================#
+# Text Styling :)                     #
+#=====================================#
+unset COLBLK COLRED COLGRN COLYLW
+unset COLBLU COLPUR COLCYN COLWHT
+unset REG BLD UND
+unset BGBLK BGRED BGGRN BGYLW
+unset BGBLU BGPUR BGCYN BGWHT
+unset TXRES
+if [[ -t 2 ]]; then
+    # front colors
+    COLBLK='30m'
+    COLRED='31m'
+    COLGRN='32m'
+    COLYLW='33m'
+    COLBLU='34m'
+    COLPUR='35m'
+    COLCYN='36m'
+    COLWHT='37m'
+
+    # text modes
+    REG='\033[0;'
+    BLD='\033[1;'
+    UND='\033[4;'
+
+    # background colors
+    BGBLK='\033[40;30m'
+    BGRED='\033[41;30m'
+    BGGRN='\033[42;30m'
+    BGYLW='\033[43;30m'
+    BGBLU='\033[44;30m'
+    BGPUR='\033[45;30m'
+    BGCYN='\033[46;30m'
+    BGWHT='\033[47;30m'
+
+    # reset styling
+    TXRES='\033[0;0m'
+fi
+readonly COLBLK COLRED COLGRN COLYLW
+readonly COLBLU COLPUR COLCYN COLWHT
+readonly REG BLD UND
+readonly BGBLK BGRED BGGRN BGYLW
+readonly BGBLU BGPUR BGCYN BGWHT
+readonly TXRES
+
+#=====================================#
+# Add .bin before int check           #
+#=====================================#
 [ -d $HOME/.bin ] && PATH=$HOME/.bin:$PATH
 
-# If not running interactively, stop here
+#=====================================#
+# when not interactive stop           #
+#=====================================#
 [[ $- != *i* ]] && return
 
-# Command history.
+#=====================================#
+# History settings                    #
+#=====================================#
 export HISTIGNORE="&:ls:[bf]g:exit:reset:clear:cd*";
 export HISTSIZE=4096;
 export HISTCONTROL="ignoreboth:erasedups"
 shopt -s histreedit;
 
-# File manipulation.
+#=====================================#
+# LS colors                           #
+#=====================================#
 export LS_COLORS='no=00:fi=00:di=01;34:ln=01;36:pi=40;33:so=01;35:do=01;35:bd=40;33;01:cd=40;33;01:or=40;31;01:su=37;41:sg=30;43:tw=30;42:ow=34;42:st=37;44:ex=01;32:*.tar=01;31:*.tgz=01;31:*.arj=01;31:*.taz=01;31:*.lzh=01;31:*.zip=01;31:*.z=01;31:*.Z=01;31:*.gz=01;31:*.bz2=01;31:*.deb=01;31:*.rpm=01;31:*.jar=01;31:*.7z=01;31:*.xz=01;31:*.jpg=01;35:*.jpeg=01;35:*.gif=01;35:*.bmp=01;35:*.pbm=01;35:*.pgm=01;35:*.ppm=01;35:*.tga=01;35:*.xbm=01;35:*.xpm=01;35:*.tif=01;35:*.tiff=01;35:*.png=01;35:*.mov=01;35:*.mpg=01;35:*.mpeg=01;35:*.avi=01;35:*.fli=01;35:*.gl=01;35:*.dl=01;35:*.xcf=01;35:*.xwd=01;35:*.flac=01;35:*.mp3=01;35:*.mpc=01;35:*.ogg=01;35:*.wav=01;35:';
 
+#=====================================#
+# EDITOR is vim ofcourse              #
+#=====================================#
+export EDITOR=vim;
+
+#=====================================#
+# ALIASES                             #
+#=====================================#
 if ls --version > /dev/null 2>&1; then
 	alias ls='ls --color=auto'; #gnu
 else
@@ -25,35 +86,9 @@ fi
 alias grep='grep --color';
 alias cd..='cd ..';
 
-[ -x /usr/bin/pacman-color ] && alias pacman='pacman-color';
-
-export EDITOR=vim;
-
-# Text Styling :)
-COLBLK='30m'
-COLRED='31m'
-COLGRN='32m'
-COLYLW='33m'
-COLBLU='34m'
-COLPUR='35m'
-COLCYN='36m'
-COLWHT='37m'
-
-REG='\033[0;'
-BLD='\033[1;'
-UND='\033[4;'
-
-BGBLK='\033[40;30m'
-BGRED='\033[41;30m'
-BGGRN='\033[42;30m'
-BGYLW='\033[43;30m'
-BGBLU='\033[44;30m'
-BGPUR='\033[45;30m'
-BGCYN='\033[46;30m'
-BGWHT='\033[47;30m'
-
-TXRES='\033[0;0m'
-
+#=====================================#
+# FUNCTIONS                           #
+#=====================================#
 function smiley {
 	local res=$?
 	if [ "$res" == "0" ]; then
@@ -138,7 +173,9 @@ function fldcol {
 	return $res
 }
 
-# configure prompt
+#=====================================#
+# Default promt colors                #
+#=====================================#
 if [ `id -u` != "0" ]; then
 	PSCOL=${REG}${COLYLW};
 	USRCOL=${BLD}${COLYLW};
@@ -148,8 +185,9 @@ else
 fi
 
 
-# configure host coloring
-#switch
+#=====================================#
+# Host colors (to be removed)         #
+#=====================================#
 if which hostname > /dev/null 2>&1; then
 	#hostname util exists
 	hostname=$(hostname)
@@ -190,7 +228,9 @@ case $hostname in
 	;;
 esac
 
-# configure session coloring
+#=====================================#
+# Session colors tty/ssh/screen       #
+#=====================================#
 if [ "$STY" != "" ]; then
 	# screen
 	SESSCOL=${BLD}${COLCYN}
@@ -201,6 +241,9 @@ else
 	SESSCOL=${PSCOL}
 fi
 
+#=====================================#
+# Configure prompt                    #
+#=====================================#
 PS1="\[${PSCOL}\]┌─┤\[${TXRES}\]\$(smiley)\[${TXRES}\]\[${PSCOL}\]├─┤\[${TXRES}\]\[${SESSCOL}\]\t\[${TXRES}\]\[${PSCOL}\]├─┤\[${TXRES}\]\[${USRCOL}\]\u\[${TXRES}\]\[${PSCOL}\] @ \[${TXRES}\]\[${HSTCOL}\]\h\[${TXRES}\]\[${PSCOL}\]├─┤\[${TXRES}\]\$(fldcol)\w\[${TXRES}\]\[${PSCOL}\]├\[${TXRES}\]\$(scmbranch)\[${TXRES}\]\[${PSCOL}\]─╼\n└╼\[${TXRES}\] "
 PS2="\[${PSCOL}\]╶╼\[${TXRES}\] "
 PS3="\[${PSCOL}\]╶╼\[${TXRES}\] "
