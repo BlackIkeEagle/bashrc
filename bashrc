@@ -58,6 +58,20 @@ readonly TXRES
 [[ $- != *i* ]] && return
 
 #=====================================#
+# Load config                         #
+#=====================================#
+if [ -e $HOME/.bashrc.config ]; then
+    source $HOME/.bashrc.config
+elif [ -e /etc/bashrc.config ]; then
+    source /etc/bashrc.config
+else
+    # defaults
+    PSCOL=${REG}${COLYLW}
+    USRCOL=${BLD}${COLYLW}
+    HSTCOL=${BLD}${COLWHT}
+fi
+
+#=====================================#
 # History settings                    #
 #=====================================#
 export HISTIGNORE="&:ls:[bf]g:exit:reset:clear:cd*";
@@ -176,57 +190,10 @@ function fldcol {
 #=====================================#
 # Default promt colors                #
 #=====================================#
-if [ `id -u` != "0" ]; then
-	PSCOL=${REG}${COLYLW};
-	USRCOL=${BLD}${COLYLW};
-else
+if [ `id -u` == "0" ]; then
 	PSCOL=${REG}${COLRED};
 	USRCOL=${BLD}${COLRED};
 fi
-
-
-#=====================================#
-# Host colors (to be removed)         #
-#=====================================#
-if which hostname > /dev/null 2>&1; then
-	#hostname util exists
-	hostname=$(hostname)
-else
-	#linux if hostname util does not exist
-	hostname=$(cat /proc/sys/kernel/hostname)
-fi
-case $hostname in
-	BlackRaptor)
-		HSTCOL=${BGRED}${BLD}${COLWHT}
-	;;
-	BlackOwl)
-		HSTCOL=${BGRED}${BLD}${COLYLW}
-	;;
-	BlackVpn)
-		HSTCOL=${BGRED}${BLD}${COLGRN}
-	;;
-	BlackFalcon)
-		HSTCOL=${BLD}${COLGRN}
-	;;
-	BlackEagle)
-		HSTCOL=${BLD}${COLCYN}
-	;;
-	BlackPidgin)
-		HSTCOL=${BLD}${COLPUR}
-	;;
-	BlackHarrier)
-		HSTCOL=${BLD}${COLWHT}
-	;;
-	BlackHawk)
-		HSTCOL=${BGGRN}${BLD}${COLWHT}
-	;;
-	BlackKite)
-		HSTCOL=${BGGRN}${BLD}${COLYLW}
-	;;
-	*)
-		HSTCOL=${PSCOL}
-	;;
-esac
 
 #=====================================#
 # Session colors tty/ssh/screen       #
