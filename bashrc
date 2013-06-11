@@ -69,6 +69,8 @@ else
     PSCOL=${REG}${COLYLW}
     USRCOL=${BLD}${COLYLW}
     HSTCOL=${BLD}${COLWHT}
+    # default flags
+    SCMDIRTY=1
 fi
 
 #=====================================#
@@ -124,7 +126,9 @@ function scmbranch {
 				GITBRANCH=$(git symbolic-ref HEAD 2>/dev/null)
 				GITBRANCH=${GITBRANCH/refs\/heads\//}
 				GITDIRTY=
-				git diff --no-ext-diff --quiet --exit-code || GITDIRTY=" *"
+				if [ $SCMDIRTY -eq 1 ]; then
+					git diff --no-ext-diff --quiet --exit-code || GITDIRTY=" *"
+				fi
 				if [ "${GITBRANCH}" == "master" ]; then
 					GITBRANCH="${PSCOL}─(${TXRES}${BLD}${COLYLW}git${TXRES}${PSCOL})─(${TXRES}${REG}${COLGRN}${GITBRANCH}${GITDIRTY}${TXRES}${PSCOL})"
 				elif [ "${GITBRANCH}" == "" ]; then
@@ -139,7 +143,9 @@ function scmbranch {
 			if hg branch > /dev/null 2>&1; then
 				HGBRANCH=$(hg branch 2>/dev/null)
 				HGDIRTY=
-				[[ "$(hg status -n | wc -l)" == "0" ]] || HGDIRTY=" *"
+				if [ $SCMDIRTY -eq 1 ]; then
+					[[ "$(hg status -n | wc -l)" == "0" ]] || HGDIRTY=" *"
+				fi
 				if [ "${HGBRANCH}" == "default" ]; then
 					HGBRANCH="${PSCOL}─(${TXRES}${BLD}${COLYLW}hg${TXRES}${PSCOL})─(${TXRES}${REG}${COLGRN}${HGBRANCH}${HGDIRTY}${TXRES}${PSCOL})"
 				else
@@ -151,7 +157,9 @@ function scmbranch {
 		if which svn > /dev/null 2>&1; then
 			if svn info > /dev/null 2>&1; then
 				SVNREVISION=$(svn info | sed -ne 's/^Revision: //p')
-				[[ "$(svn status | wc -l)" == "0" ]] || SVNDIRTY=" *"
+				if [ $SCMDIRTY -eq 1 ]; then
+					[[ "$(svn status | wc -l)" == "0" ]] || SVNDIRTY=" *"
+				fi
 				SVNBRANCH="${PSCOL}─(${TXRES}${BLD}${COLYLW}svn${TXRES}${PSCOL})─(${TXRES}${REG}${COLGRN}${SVNREVISION}${SVNDIRTY}${TXRES}${PSCOL})"
 				echo -ne ${SVNBRANCH}
 			fi

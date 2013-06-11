@@ -50,4 +50,7 @@ configuration
     PSCOL=${REG}${COLYLW}  # default ps (prompt) color
     USRCOL=${BLD}${COLYLW} # the color used for the user
     HSTCOL=${BLD}${COLWHT} # the color used for the hostname
+
+    SCMDIRTY=1             # source code management dirty state
+	                       # enabled (default) or disabled
 	```
