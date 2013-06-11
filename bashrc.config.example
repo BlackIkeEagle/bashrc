@@ -1,3 +1,4 @@
+# vim:set ft=sh:
 PSCOL=${REG}${COLGRN}
 USRCOL=${BLD}${COLCYN}
 HSTCOL=${BLD}${COLPUR}
