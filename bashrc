@@ -64,14 +64,13 @@ if [ -e $HOME/.bashrc.config ]; then
     source $HOME/.bashrc.config
 elif [ -e /etc/bashrc.config ]; then
     source /etc/bashrc.config
-else
-    # defaults
-    PSCOL=${REG}${COLYLW}
-    USRCOL=${BLD}${COLYLW}
-    HSTCOL=${BLD}${COLWHT}
-    # default flags
-    SCMDIRTY=1
 fi
+# defaults
+[ -z $PSCOL ] && PSCOL=${REG}${COLYLW}
+[ -z $USRCOL ] && USRCOL=${BLD}${COLYLW}
+[ -z $HSTCOL ] && HSTCOL=${BLD}${COLWHT}
+# default flags
+[ -z $SCMDIRTY ] && SCMDIRTY=1
 
 #=====================================#
 # History settings                    #
