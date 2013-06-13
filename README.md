@@ -51,6 +51,7 @@ configuration
     USRCOL=${BLD}${COLYLW} # the color used for the user
     HSTCOL=${BLD}${COLWHT} # the color used for the hostname
 
+	SCMENABLED=1           # enable scm integration
     SCMDIRTY=1             # source code management dirty state
 	                       # enabled (default) or disabled
 	```
