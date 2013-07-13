@@ -196,7 +196,7 @@ function fldcol {
 }
 
 #=====================================#
-# Default promt colors                #
+# Default prompt colors               #
 #=====================================#
 if [ `id -u` == "0" ]; then
 	PSCOL=${REG}${COLRED};
