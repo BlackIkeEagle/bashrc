@@ -132,7 +132,7 @@ function scmbranch {
 				if [ "${GITBRANCH}" == "master" ]; then
 					GITBRANCH="${PSCOL}─(${TXRES}${BLD}${COLYLW}git${TXRES}${PSCOL})─(${TXRES}${REG}${COLGRN}${GITBRANCH}${GITDIRTY}${TXRES}${PSCOL})"
 				elif [ "${GITBRANCH}" == "" ]; then
-					GITBRANCH="${PSCOL}─(${TXRES}${BLD}${COLYLW}git${TXRES}${PSCOL})─(${TXRES}${REG}${COLRED}DETACHED${GITDIRTY}${TXRES}${PSCOL})"
+					GITBRANCH="${PSCOL}─(${TXRES}${BLD}${COLYLW}git${TXRES}${PSCOL})─(${TXRES}${REG}${COLRED}$(git rev-parse --short HEAD)...${GITDIRTY}${TXRES}${PSCOL})"
 				else
 					GITBRANCH="${PSCOL}─(${TXRES}${BLD}${COLYLW}git${TXRES}${PSCOL})─(${TXRES}${REG}${COLCYN}${GITBRANCH}${GITDIRTY}${TXRES}${PSCOL})"
 				fi
