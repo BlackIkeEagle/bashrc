@@ -50,7 +50,7 @@ readonly TXRES
 #=====================================#
 # Add .bin before int check           #
 #=====================================#
-[ -d $HOME/.bin ] && PATH=$HOME/.bin:$PATH
+[[ -d $HOME/.bin ]] && PATH=$HOME/.bin:$PATH
 
 #=====================================#
 # when not interactive stop           #
@@ -60,18 +60,18 @@ readonly TXRES
 #=====================================#
 # Load config                         #
 #=====================================#
-if [ -e $HOME/.bashrc.config ]; then
+if [[ -e $HOME/.bashrc.config ]]; then
     source $HOME/.bashrc.config
-elif [ -e /etc/bashrc.config ]; then
+elif [[ -e /etc/bashrc.config ]]; then
     source /etc/bashrc.config
 fi
 # defaults
-[ -z $PSCOL ] && PSCOL=${REG}${COLYLW}
-[ -z $USRCOL ] && USRCOL=${BLD}${COLYLW}
-[ -z $HSTCOL ] && HSTCOL=${BLD}${COLWHT}
+[[ -z $PSCOL ]] && PSCOL=${REG}${COLYLW}
+[[ -z $USRCOL ]] && USRCOL=${BLD}${COLYLW}
+[[ -z $HSTCOL ]] && HSTCOL=${BLD}${COLWHT}
 # default flags
-[ -z $SCMENABLED ] && SCMENABLED=1
-[ -z $SCMDIRTY ] && SCMDIRTY=1
+[[ -z $SCMENABLED ]] && SCMENABLED=1
+[[ -z $SCMDIRTY ]] && SCMDIRTY=1
 
 #=====================================#
 # History settings                    #
@@ -107,7 +107,7 @@ alias cd..='cd ..';
 #=====================================#
 function smiley {
 	local res=$?
-	if [ "$res" == "0" ]; then
+	if [[ "$res" == "0" ]]; then
 		SMCOL=${BLD}${COLGRN}
 		SMILE="●"
 	else
@@ -120,23 +120,23 @@ function smiley {
 
 function scmbranch {
 	local res=$?
-	if [ `id -u` != "0" ] && [ $SCMENABLED -eq 1 ]; then
+    if [[ $(id -u) != "0" ]] && [[ $SCMENABLED -eq 1 ]]; then
 		if which git > /dev/null 2>&1; then
 			if git rev-parse > /dev/null 2>&1; then
 				GITBRANCH=$(git symbolic-ref HEAD 2>/dev/null)
 				GITBRANCH=${GITBRANCH/refs\/heads\//}
 				GITDIRTY=
-				if [ $SCMDIRTY -eq 1 ]; then
+				if [[ $SCMDIRTY -eq 1 ]]; then
 					# if has unstaged changes
 					git diff --no-ext-diff --quiet --exit-code || GITDIRTY=" *"
 					# if only has staged changes
-					if [ "$GITDIRTY" = "" ]; then
+					if [[ "$GITDIRTY" = "" ]]; then
 						git diff --staged --no-ext-diff --quiet --exit-code || GITDIRTY=" +"
 					fi
 				fi
-				if [ "${GITBRANCH}" == "master" ]; then
+				if [[ "${GITBRANCH}" == "master" ]]; then
 					GITBRANCH="${PSCOL}─(${TXRES}${BLD}${COLYLW}git${TXRES}${PSCOL})─(${TXRES}${REG}${COLGRN}${GITBRANCH}${GITDIRTY}${TXRES}${PSCOL})"
-				elif [ "${GITBRANCH}" == "" ]; then
+				elif [[ "${GITBRANCH}" == "" ]]; then
 					GITBRANCH="${PSCOL}─(${TXRES}${BLD}${COLYLW}git${TXRES}${PSCOL})─(${TXRES}${REG}${COLRED}$(git rev-parse --short HEAD)...${GITDIRTY}${TXRES}${PSCOL})"
 				else
 					GITBRANCH="${PSCOL}─(${TXRES}${BLD}${COLYLW}git${TXRES}${PSCOL})─(${TXRES}${REG}${COLCYN}${GITBRANCH}${GITDIRTY}${TXRES}${PSCOL})"
@@ -148,10 +148,10 @@ function scmbranch {
 			if hg branch > /dev/null 2>&1; then
 				HGBRANCH=$(hg branch 2>/dev/null)
 				HGDIRTY=
-				if [ $SCMDIRTY -eq 1 ]; then
+				if [[ $SCMDIRTY -eq 1 ]]; then
 					[[ "$(hg status -n | wc -l)" == "0" ]] || HGDIRTY=" *"
 				fi
-				if [ "${HGBRANCH}" == "default" ]; then
+				if [[ "${HGBRANCH}" == "default" ]]; then
 					HGBRANCH="${PSCOL}─(${TXRES}${BLD}${COLYLW}hg${TXRES}${PSCOL})─(${TXRES}${REG}${COLGRN}${HGBRANCH}${HGDIRTY}${TXRES}${PSCOL})"
 				else
 					HGBRANCH="${PSCOL}─(${TXRES}${BLD}${COLYLW}hg${TXRES}${PSCOL})─(${TXRES}${REG}${COLRED}${HGBRANCH}${HGDIRTY}${TXRES}${PSCOL})"
@@ -162,7 +162,7 @@ function scmbranch {
 		if which svn > /dev/null 2>&1; then
 			if svn info > /dev/null 2>&1; then
 				SVNREVISION=$(svn info | sed -ne 's/^Revision: //p')
-				if [ $SCMDIRTY -eq 1 ]; then
+				if [[ $SCMDIRTY -eq 1 ]]; then
 					[[ "$(svn status | wc -l)" == "0" ]] || SVNDIRTY=" *"
 				fi
 				SVNBRANCH="${PSCOL}─(${TXRES}${BLD}${COLYLW}svn${TXRES}${PSCOL})─(${TXRES}${REG}${COLGRN}${SVNREVISION}${SVNDIRTY}${TXRES}${PSCOL})"
@@ -175,7 +175,7 @@ function scmbranch {
 
 function fldcol {
 	local res=$?
-	if [ `id -u` != "0" ]; then
+	if [[ $(id -u) != "0" ]]; then
 		if [[ $PWD =~ \/herecura ]]; then
 			FLDCOL=${BLD}${COLBLK}${UND}${COLYLW};
 		elif [[ $PWD =~ \/scripts ]]; then
@@ -187,7 +187,7 @@ function fldcol {
 		fi
 	fi
 
-	if [ "${FLDCOL}" = "" ]; then
+	if [[ "${FLDCOL}" = "" ]]; then
 		if [[ $PWD =~ ^\/etc ]]; then
 			FLDCOL=${BLD}${COLBLK}${UND}${COLRED}
 		elif [[ $PWD =~ ^\/var/log ]]; then
@@ -203,7 +203,7 @@ function fldcol {
 #=====================================#
 # Default prompt colors               #
 #=====================================#
-if [ `id -u` == "0" ]; then
+if [[ $(id -u) == "0" ]]; then
 	PSCOL=${REG}${COLRED};
 	USRCOL=${BLD}${COLRED};
 fi
@@ -211,10 +211,10 @@ fi
 #=====================================#
 # Session colors tty/ssh/screen       #
 #=====================================#
-if [ "$STY" != "" ]; then
+if [[ "$STY" != "" ]]; then
 	# screen
 	SESSCOL=${BLD}${COLCYN}
-elif [ "$SSH_CLIENT" != "" ]; then
+elif [[ "$SSH_CLIENT" != "" ]]; then
 	# SSH
 	SESSCOL=${BLD}${COLRED}
 else
