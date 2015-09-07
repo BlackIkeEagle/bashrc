@@ -169,6 +169,16 @@ function scmbranch {
 				echo -ne ${SVNBRANCH}
 			fi
 		fi
+		if which bzr > /dev/null 2>&1; then
+			if bzr nick > /dev/null 2>&1; then
+				BZRREVISION=$(bzr revno)
+				if [[ $SCMDIRTY -eq 1 ]]; then
+					[[ "$(bzr status | wc -l)" == "0" ]] || BZRDIRTY=" *"
+				fi
+				BZRBRANCH="${PSCOL}─(%{%F{yellow}%}%Bbzr%b${PSCOL})─(%{%F{green}%}${BZRREVISION}${BZRDIRTY}${PSCOL})"
+				echo -ne ${BZRBRANCH}
+			fi
+		fi
 	fi
 	return $res
 }
