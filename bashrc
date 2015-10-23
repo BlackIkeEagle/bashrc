@@ -102,6 +102,10 @@ fi
 alias grep='grep --color';
 alias cd..='cd ..';
 
+if [[ -f $HOME/.aliases ]]; then
+    source $HOME/.aliases
+fi
+
 #=====================================#
 # FUNCTIONS                           #
 #=====================================#

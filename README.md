@@ -55,3 +55,8 @@ configuration
     SCMDIRTY=1             # source code management dirty state
 	                       # enabled (default) or disabled
 	```
+
+aliases
+-------
+
+You can add all the aliases you want by putting .aliases in your home directory.
