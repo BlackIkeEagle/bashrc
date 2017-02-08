@@ -3,6 +3,18 @@
 #######################################
 
 #=====================================#
+# Add .bin before int check           #
+#=====================================#
+if [[ -d $HOME/.bin && ":$PATH:" != *:"$HOME/.bin":* ]]; then
+    PATH=$HOME/.bin:$PATH
+fi
+
+#=====================================#
+# when not interactive stop           #
+#=====================================#
+[[ $- != *i* ]] && return
+
+#=====================================#
 # Text Styling :)                     #
 #=====================================#
 unset COLBLK COLRED COLGRN COLYLW
@@ -46,16 +58,6 @@ readonly REG BLD UND
 readonly BGBLK BGRED BGGRN BGYLW
 readonly BGBLU BGPUR BGCYN BGWHT
 readonly TXRES
-
-#=====================================#
-# Add .bin before int check           #
-#=====================================#
-[[ -d $HOME/.bin ]] && PATH=$HOME/.bin:$PATH
-
-#=====================================#
-# when not interactive stop           #
-#=====================================#
-[[ $- != *i* ]] && return
 
 #=====================================#
 # Load config                         #
