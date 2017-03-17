@@ -76,6 +76,14 @@ fi
 [[ -z $SCMDIRTY ]] && SCMDIRTY=1
 
 #=====================================#
+# Keybindings                         #
+#=====================================#
+
+# context aware history search
+bind '"\e[5~":history-search-backward'
+bind '"\e[6~":history-search-forward'
+
+#=====================================#
 # History settings                    #
 #=====================================#
 export HISTIGNORE="&:ls:[bf]g:exit:reset:clear:cd*";
