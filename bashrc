@@ -267,12 +267,15 @@ function fldcol {
 # Session colors tty/ssh/screen       #
 #=====================================#
 
-if [[ "$STY" != "" ]]; then
-	# screen
-	SESSCOL=${BLD}${COLCYN}
-elif [[ "$SSH_CLIENT" != "" ]]; then
+if [[ "$SSH_CLIENT" != "" ]]; then
 	# SSH
 	SESSCOL=${BLD}${COLRED}
+elif [[ "$STY" != "" ]]; then
+	# screen
+	SESSCOL=${BLD}${COLCYN}
+elif [[ ! -z $TMUX ]]; then
+	# tmux
+	SESSCOL=${BLD}${COLCYN}
 else
 	SESSCOL=${PSCOL}
 fi
