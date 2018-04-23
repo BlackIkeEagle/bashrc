@@ -35,7 +35,7 @@ fi
 #=====================================#
 
 if [[ ! -z $COLORTERM ]] && [[ "$COLORTERM" == "truecolor" ]]; then
-    ecport TERM=xterm-256color
+    export TERM=xterm-256color
 fi
 
 #=====================================#
