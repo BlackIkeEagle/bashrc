@@ -31,6 +31,14 @@ if [[ "$TERM" == "xterm-termite" ]] || [[ ! -z $GNOME_TERMINAL_SCREEN ]]; then
 fi
 
 #=====================================#
+# force TERM if truecolor             #
+#=====================================#
+
+if [[ ! -z $COLORTERM ]] && [[ "$COLORTERM" == "truecolor" ]]; then
+    ecport TERM=xterm-256color
+fi
+
+#=====================================#
 # Add .bin before int check           #
 #=====================================#
 
