@@ -23,6 +23,14 @@ then
 fi
 
 #=====================================#
+# vte terminal detection              #
+#=====================================#
+
+if [[ "$TERM" == "xterm-termite" ]] || [[ ! -z $GNOME_TERMINAL_SCREEN ]]; then
+    [[ -e /etc/profile.d/vte.sh ]] && source /etc/profile.d/vte.sh
+fi
+
+#=====================================#
 # Add .bin before int check           #
 #=====================================#
 
