@@ -138,8 +138,8 @@ fi
 [[ -z $SCMDIRTY ]] && SCMDIRTY=1
 
 if [[ $(id -u) == "0" ]]; then
-	PSCOL=${REG}${COLRED};
-	USRCOL=${BLD}${COLRED};
+    PSCOL=${REG}${COLRED};
+    USRCOL=${BLD}${COLRED};
 fi
 
 #=====================================#
@@ -159,9 +159,9 @@ export EDITOR=vim;
 #=====================================#
 
 if ls --version > /dev/null 2>&1; then
-	alias ls='ls --color=auto'; #gnu
+    alias ls='ls --color=auto'; #gnu
 else
-	alias ls='ls -G'; #osx
+    alias ls='ls -G'; #osx
 fi
 alias grep='grep --color';
 alias cd..='cd ..';
@@ -175,20 +175,20 @@ fi
 #=====================================#
 
 function smiley {
-	local res=$?
-	if [[ "$res" == "0" ]]; then
-		SMCOL=${BLD}${COLGRN}
-		SMILE="●"
-	else
-		SMCOL=${BLD}${COLRED}
-		SMILE="●"
-	fi
-	echo -ne ${SMCOL}${SMILE}
-	return $res
+    local res=$?
+    if [[ "$res" == "0" ]]; then
+        SMCOL=${BLD}${COLGRN}
+        SMILE="●"
+    else
+        SMCOL=${BLD}${COLRED}
+        SMILE="●"
+    fi
+    echo -ne ${SMCOL}${SMILE}
+    return $res
 }
 
 function scmbranch {
-	local res=$?
+    local res=$?
     if [[ $(id -u) != "0" ]] && [[ $SCMENABLED -eq 1 ]]; then
         GITENABLED=0
         HGENABLED=0
@@ -251,35 +251,35 @@ function scmbranch {
             BZRBRANCH="${PSCOL}─(%{%F{yellow}%}%Bbzr%b${PSCOL})─(%{%F{green}%}${BZRREVISION}${BZRDIRTY}${PSCOL})"
             echo -ne ${BZRBRANCH}
         fi
-	fi
-	return $res
+    fi
+    return $res
 }
 
 function fldcol {
-	local res=$?
-	if [[ $(id -u) != "0" ]]; then
-		if [[ $PWD =~ \/herecura ]]; then
-			FLDCOL=${BLD}${COLBLK}${UND}${COLYLW};
-		elif [[ $PWD =~ \/scripts ]]; then
-			FLDCOL=${BLD}${COLBLK}${UND}${COLBLU}
-		elif [[ $PWD =~ \/vimfiles ]]; then
-			FLDCOL=${BLD}${COLBLK}${UND}${COLPUR}
-		elif [[ $PWD =~ \/devel ]]; then
-			FLDCOL=${BLD}${COLBLK}${UND}${COLWHT}
-		fi
-	fi
+    local res=$?
+    if [[ $(id -u) != "0" ]]; then
+        if [[ $PWD =~ \/herecura ]]; then
+            FLDCOL=${BLD}${COLBLK}${UND}${COLYLW};
+        elif [[ $PWD =~ \/scripts ]]; then
+            FLDCOL=${BLD}${COLBLK}${UND}${COLBLU}
+        elif [[ $PWD =~ \/vimfiles ]]; then
+            FLDCOL=${BLD}${COLBLK}${UND}${COLPUR}
+        elif [[ $PWD =~ \/devel ]]; then
+            FLDCOL=${BLD}${COLBLK}${UND}${COLWHT}
+        fi
+    fi
 
-	if [[ "${FLDCOL}" = "" ]]; then
-		if [[ $PWD =~ ^\/etc ]]; then
-			FLDCOL=${BLD}${COLBLK}${UND}${COLRED}
-		elif [[ $PWD =~ ^\/var/log ]]; then
-			FLDCOL=${BLD}${COLBLK}${UND}${COLRED}
-		else
-			FLDCOL=${BLD}${COLCYN};
-		fi
-	fi
-	echo -ne ${FLDCOL}
-	return $res
+    if [[ "${FLDCOL}" = "" ]]; then
+        if [[ $PWD =~ ^\/etc ]]; then
+            FLDCOL=${BLD}${COLBLK}${UND}${COLRED}
+        elif [[ $PWD =~ ^\/var/log ]]; then
+            FLDCOL=${BLD}${COLBLK}${UND}${COLRED}
+        else
+            FLDCOL=${BLD}${COLCYN};
+        fi
+    fi
+    echo -ne ${FLDCOL}
+    return $res
 }
 
 #=====================================#
@@ -287,16 +287,16 @@ function fldcol {
 #=====================================#
 
 if [[ "$SSH_CLIENT" != "" ]]; then
-	# SSH
-	SESSCOL=${BLD}${COLRED}
+    # SSH
+    SESSCOL=${BLD}${COLRED}
 elif [[ "$STY" != "" ]]; then
-	# screen
-	SESSCOL=${BLD}${COLCYN}
+    # screen
+    SESSCOL=${BLD}${COLCYN}
 elif [[ ! -z $TMUX ]]; then
-	# tmux
-	SESSCOL=${BLD}${COLCYN}
+    # tmux
+    SESSCOL=${BLD}${COLCYN}
 else
-	SESSCOL=${PSCOL}
+    SESSCOL=${PSCOL}
 fi
 
 #=====================================#
