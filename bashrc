@@ -190,64 +190,67 @@ function smiley {
 function scmbranch {
 	local res=$?
     if [[ $(id -u) != "0" ]] && [[ $SCMENABLED -eq 1 ]]; then
-		if which git > /dev/null 2>&1; then
-			if git rev-parse > /dev/null 2>&1; then
-				GITBRANCH=$(git symbolic-ref HEAD 2>/dev/null)
-				GITBRANCH=${GITBRANCH/refs\/heads\//}
-				GITDIRTY=
-				if [[ $SCMDIRTY -eq 1 ]]; then
-					# if has unstaged changes
-					git diff --no-ext-diff --quiet --exit-code || GITDIRTY=" *"
-					# if only has staged changes
-					if [[ "$GITDIRTY" = "" ]]; then
-						git diff --staged --no-ext-diff --quiet --exit-code || GITDIRTY=" +"
-					fi
-				fi
-				if [[ "${GITBRANCH}" == "master" ]]; then
-					GITBRANCH="${PSCOL}─(${TXRES}${BLD}${COLYLW}git${TXRES}${PSCOL})─(${TXRES}${REG}${COLGRN}${GITBRANCH}${GITDIRTY}${TXRES}${PSCOL})"
-				elif [[ "${GITBRANCH}" == "" ]]; then
-					GITBRANCH="${PSCOL}─(${TXRES}${BLD}${COLYLW}git${TXRES}${PSCOL})─(${TXRES}${REG}${COLRED}$(git rev-parse --short HEAD)...${GITDIRTY}${TXRES}${PSCOL})"
-				else
-					GITBRANCH="${PSCOL}─(${TXRES}${BLD}${COLYLW}git${TXRES}${PSCOL})─(${TXRES}${REG}${COLCYN}${GITBRANCH}${GITDIRTY}${TXRES}${PSCOL})"
-				fi
-				echo -ne ${GITBRANCH}
-			fi
-		fi
-		if which hg > /dev/null 2>&1; then
-			if hg branch > /dev/null 2>&1; then
-				HGBRANCH=$(hg branch 2>/dev/null)
-				HGDIRTY=
-				if [[ $SCMDIRTY -eq 1 ]]; then
-					[[ "$(hg status -n | wc -l)" == "0" ]] || HGDIRTY=" *"
-				fi
-				if [[ "${HGBRANCH}" == "default" ]]; then
-					HGBRANCH="${PSCOL}─(${TXRES}${BLD}${COLYLW}hg${TXRES}${PSCOL})─(${TXRES}${REG}${COLGRN}${HGBRANCH}${HGDIRTY}${TXRES}${PSCOL})"
-				else
-					HGBRANCH="${PSCOL}─(${TXRES}${BLD}${COLYLW}hg${TXRES}${PSCOL})─(${TXRES}${REG}${COLRED}${HGBRANCH}${HGDIRTY}${TXRES}${PSCOL})"
-				fi
-				echo -ne ${HGBRANCH}
-			fi
-		fi
-		if which svn > /dev/null 2>&1; then
-			if svn info > /dev/null 2>&1; then
-				SVNREVISION=$(svn info | sed -ne 's/^Revision: //p')
-				if [[ $SCMDIRTY -eq 1 ]]; then
-					[[ "$(svn status | wc -l)" == "0" ]] || SVNDIRTY=" *"
-				fi
-				SVNBRANCH="${PSCOL}─(${TXRES}${BLD}${COLYLW}svn${TXRES}${PSCOL})─(${TXRES}${REG}${COLGRN}${SVNREVISION}${SVNDIRTY}${TXRES}${PSCOL})"
-				echo -ne ${SVNBRANCH}
-			fi
-		fi
-		if which bzr > /dev/null 2>&1; then
-			if bzr nick > /dev/null 2>&1; then
-				BZRREVISION=$(bzr revno)
-				if [[ $SCMDIRTY -eq 1 ]]; then
-					[[ "$(bzr status | wc -l)" == "0" ]] || BZRDIRTY=" *"
-				fi
-				BZRBRANCH="${PSCOL}─(%{%F{yellow}%}%Bbzr%b${PSCOL})─(%{%F{green}%}${BZRREVISION}${BZRDIRTY}${PSCOL})"
-				echo -ne ${BZRBRANCH}
-			fi
-		fi
+        GITENABLED=0
+        HGENABLED=0
+        SVNENABLED=0
+        BZRENABLED=0
+        if which git > /dev/null 2>&1; then
+            GITENABLED=1
+        fi
+        if which hg > /dev/null 2>&1; then
+            HGENABLED=1
+        fi
+        if which svn > /dev/null 2>&1; then
+            SVNENABLED=1
+        fi
+        if which bzr > /dev/null 2>&1; then
+            BZRENABLED=1
+        fi
+
+        if [[ $GITENABLED -eq 1 ]] && GITBRANCH=$(git rev-parse --abbrev-ref HEAD 2>&1); then
+            GITDIRTY=''
+            if [[ $SCMDIRTY -eq 1 ]]; then
+                # if has unstaged changes
+                git diff --no-ext-diff --quiet --exit-code || GITDIRTY=" *"
+                # if only has staged changes
+                if [[ "$GITDIRTY" = "" ]]; then
+                    git diff --staged --no-ext-diff --quiet --exit-code || GITDIRTY=" +"
+                fi
+            fi
+            if [[ "${GITBRANCH}" == "master" ]]; then
+                GITBRANCH="${PSCOL}─(${TXRES}${BLD}${COLYLW}git${TXRES}${PSCOL})─(${TXRES}${REG}${COLGRN}${GITBRANCH}${GITDIRTY}${TXRES}${PSCOL})"
+            elif [[ "${GITBRANCH}" == "" ]]; then
+                GITBRANCH="${PSCOL}─(${TXRES}${BLD}${COLYLW}git${TXRES}${PSCOL})─(${TXRES}${REG}${COLRED}$(git rev-parse --short HEAD)...${GITDIRTY}${TXRES}${PSCOL})"
+            else
+                GITBRANCH="${PSCOL}─(${TXRES}${BLD}${COLYLW}git${TXRES}${PSCOL})─(${TXRES}${REG}${COLCYN}${GITBRANCH}${GITDIRTY}${TXRES}${PSCOL})"
+            fi
+            echo -ne ${GITBRANCH}
+        elif [[ $HGENABLED -eq 1 ]] && HGBRANCH=$(hg branch 2>/dev/null); then
+            HGDIRTY=
+            if [[ $SCMDIRTY -eq 1 ]]; then
+                [[ "$(hg status -n | wc -l)" == "0" ]] || HGDIRTY=" *"
+            fi
+            if [[ "${HGBRANCH}" == "default" ]]; then
+                HGBRANCH="${PSCOL}─(${TXRES}${BLD}${COLYLW}hg${TXRES}${PSCOL})─(${TXRES}${REG}${COLGRN}${HGBRANCH}${HGDIRTY}${TXRES}${PSCOL})"
+            else
+                HGBRANCH="${PSCOL}─(${TXRES}${BLD}${COLYLW}hg${TXRES}${PSCOL})─(${TXRES}${REG}${COLRED}${HGBRANCH}${HGDIRTY}${TXRES}${PSCOL})"
+            fi
+            echo -ne ${HGBRANCH}
+        elif [[ $SVNENABLED -eq 1 ]] && SVNINFO=$(svn info 2>&1); then
+            SVNREVISION=$(echo "$SVNINFO" | sed -ne 's/^Revision: //p')
+            if [[ $SCMDIRTY -eq 1 ]]; then
+                [[ "$(svn status | wc -l)" == "0" ]] || SVNDIRTY=" *"
+            fi
+            SVNBRANCH="${PSCOL}─(${TXRES}${BLD}${COLYLW}svn${TXRES}${PSCOL})─(${TXRES}${REG}${COLGRN}${SVNREVISION}${SVNDIRTY}${TXRES}${PSCOL})"
+            echo -ne ${SVNBRANCH}
+        elif [[ $BZRENABLED -eq 1 ]] && bzr nick > /dev/null 2>&1; then
+            BZRREVISION=$(bzr revno)
+            if [[ $SCMDIRTY -eq 1 ]]; then
+                [[ "$(bzr status | wc -l)" == "0" ]] || BZRDIRTY=" *"
+            fi
+            BZRBRANCH="${PSCOL}─(%{%F{yellow}%}%Bbzr%b${PSCOL})─(%{%F{green}%}${BZRREVISION}${BZRDIRTY}${PSCOL})"
+            echo -ne ${BZRBRANCH}
+        fi
 	fi
 	return $res
 }
