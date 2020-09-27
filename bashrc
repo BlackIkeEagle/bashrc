@@ -42,6 +42,9 @@ fi
 # Add .bin before int check           #
 #=====================================#
 
+if [[ -d $HOME/.local/bin && ":$PATH:" != *:"$HOME/.local/bin":* ]]; then
+    PATH=$HOME/.loca/bin:$PATH
+fi
 if [[ -d $HOME/.bin && ":$PATH:" != *:"$HOME/.bin":* ]]; then
     PATH=$HOME/.bin:$PATH
 fi
